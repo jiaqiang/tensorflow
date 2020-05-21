@@ -186,7 +186,9 @@ std::unique_ptr<GraphOptimizer> MetaOptimizer::MakeNewOptimizer(
   MK_OPT("constfold", new ConstantFolding(cpu_device_));
   MK_OPT("shape", new ShapeOptimizer());
   MK_OPT("remap", new Remapper(cfg_.remapping()));
-  MK_OPT("layout", new GenericLayoutOptimizer());
+  MK_OPT("layout", new GenericLayoutOptimizer(
+                       /*optimization level*/ cfg_.layout_optimizer(),
+                       /*CPU layout conversion*/ cfg_.cpu_layout_conversion()));
   MK_OPT("auto_mixed_precision",
          new AutoMixedPrecision(AutoMixedPrecisionMode::CUDA));
   MK_OPT("auto_mixed_precision_mkl",
@@ -265,7 +267,9 @@ Status MetaOptimizer::InitializeOptimizers(
         MakeUnique<ArithmeticOptimizer>(cfg_.arithmetic_optimization()));
   }
   if (cfg_.layout_optimizer() != RewriterConfig::OFF) {
-    optimizers->push_back(MakeUnique<GenericLayoutOptimizer>());
+    optimizers->push_back(MakeUnique<GenericLayoutOptimizer>(
+        /*optimization level*/ cfg_.layout_optimizer(),
+        /*CPU layout conversion*/ cfg_.cpu_layout_conversion()));
   }
   if (cfg_.remapping() != RewriterConfig::OFF) {
     optimizers->push_back(MakeUnique<Remapper>(cfg_.remapping()));
