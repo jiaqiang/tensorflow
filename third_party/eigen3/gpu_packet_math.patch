@@ -278,30 +278,30 @@
 +  // There is no half-size packet for Packet8h.
 +  typedef Packet16b half;
 +  enum {
-+    Vectorizable = 1,
-+    AlignedOnScalar = 1,
-+    size = 16,
++    Vectorizable = 0,
++    AlignedOnScalar = 0,
++    size = 1,
 +    HasHalfPacket = 0,
-+    HasCmpAndCast = 1,
++    HasCmpAndCast = 0,
 +    HasBlend = 0,
-+    HasReduxp = 1,
++    HasReduxp = 0,
 +    HasSin = EIGEN_FAST_MATH,
 +    HasCos = EIGEN_FAST_MATH,
 +#if EIGEN_GNUC_AT_LEAST(5, 3) || (!EIGEN_COMP_GNUC_STRICT)
 +#ifdef EIGEN_VECTORIZE_AVX512DQ
-+    HasLog = 1,
-+    HasLog1p  = 1,
-+    HasExpm1  = 1,
-+    HasNdtri = 1,
-+    HasBessel  = 1,
++    HasLog = 0,
++    HasLog1p  = 0,
++    HasExpm1  = 0,
++    HasNdtri = 0,
++    HasBessel  = 0,
 +#endif
-+    HasExp = 1,
++    HasExp = 0,
 +    HasSqrt = EIGEN_FAST_MATH,
 +    HasRsqrt = EIGEN_FAST_MATH,
 +    HasTanh = EIGEN_FAST_MATH,
 +    HasErf = EIGEN_FAST_MATH,
 +#endif
-+    HasDiv = 1
++    HasDiv = 0
 +  };
 +};
 +
@@ -309,7 +309,7 @@
 +struct unpacket_traits<Packet16b>
 +{
 +  typedef bfloat16 type;
-+  enum {size=16, alignment=Aligned32, vectorizable=true, masked_load_available=false, masked_store_available=false};
++  enum {size=1, alignment=Aligned32, vectorizable=false, masked_load_available=false, masked_store_available=false};
 +  typedef Packet16b half;
 +};
 +
