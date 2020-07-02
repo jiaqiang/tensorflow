@@ -49,6 +49,13 @@ constexpr int kDepthIn = 8;
 constexpr int kKernel = 3;
 constexpr int kDepthOut = 16;
 
+// When there is a GPU, we test generic_layout_optimization for the conversion
+// from NHWC to NCHW format. When there is only CPU, we test the conversion
+// from NCHW to NHWC format. The following macros help setting tensor shapes,
+// source and destination format strings, and transpose permutation vectors
+// appropriately for NHWC -> NCHW conversion (when GPU) and NCHW -> NHWC
+// conversion (when only CPU).
+
 #if (GOOGLE_CUDA || TENSORFLOW_USE_ROCM)
 #define DIMS(n, h, w, c) \
   { n, h, w, c }

@@ -392,6 +392,10 @@ Status EraseOutputShapeAttrs(TransposeContext* context) {
 
 }  // namespace
 
+// When there is a GPU, the computation graph is converted to NCHW format.
+// When there is only CPU, there will be no conversion by default, unless user
+// chose to convert the graph to a desired format. Currently, NCHW -> NHWC
+// format conversion is available on CPU.
 Status GenericLayoutOptimizer::Optimize(Cluster* cluster,
                                         const GrapplerItem& item,
                                         GraphDef* output) {
